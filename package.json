@@ -1,0 +1,17 @@
+{
+  "name": "phase-bridge-bot",
+  "version": "1.0.0",
+  "description": "A bot that posts daily phrases to Telegram channels using OpenAI API.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
+    "openai": "^4.68.4"
+  }
+}
