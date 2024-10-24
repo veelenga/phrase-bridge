@@ -1,7 +1,7 @@
 {
-  "name": "phase-bridge-bot",
+  "name": "phrase-bridge-bot",
   "version": "1.0.0",
-  "description": "A bot that posts daily phrases to Telegram channels using OpenAI API.",
+  "description": "A bot that posts phrases to Telegram channels using OpenAI API.",
   "main": "index.js",
   "type": "module",
   "scripts": {
