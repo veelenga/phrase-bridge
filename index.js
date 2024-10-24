@@ -56,7 +56,7 @@ export async function handler() {
 async function generateContent() {
   try {
     const response = await client.chat.completions.create({
-      model: "gpt-4o",
+      model: process.env.OPENAI_API_MODEL,
       messages: [{ role: "user", content: instructions }],
       max_tokens: 1000,
       temperature: 0.7,
