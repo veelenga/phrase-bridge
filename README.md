@@ -2,23 +2,19 @@
 
 A bot that posts phrases to Telegram channels using OpenAI API. The bot reads instructions from markdown files and generates content using OpenAI's GPT models, then posts the generated content to specified Telegram channels.
 
-## Environment Variables
-
-Create a `.env` using `.env.example` file.
-
-## Installation
-
-```bash
-# Install dependencies
-yarn install
-```
+![](examples/ua-pl.jpeg)
 
 ## Usage
 
+## Environment Variables
+
+Create your `.env` using `.env.example` file.
+
 ### Local Development
 
-Run the bot locally:
+Install deps and run the bot locally:
 ```bash
+yarn install
 yarn start
 ```
 
