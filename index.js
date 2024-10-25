@@ -1,11 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import dotenv from "dotenv";
 import OpenAI from "openai";
 import axios from "axios";
-
-dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,7 +60,7 @@ async function generateContent() {
     });
 
     const content = response.choices[0].message.content;
-    console.log(content);
+    console.debug(content);
     return content;
   } catch (error) {
     console.error(
