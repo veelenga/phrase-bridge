@@ -1,23 +1,25 @@
-import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import OpenAI from "openai";
 import axios from "axios";
 
+import {
+  registerHelpers,
+  loadInstructions,
+  loadTemplates,
+} from "./lib/config.js";
+import languageFunction from "./lib/language-function.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const BRIDGE = process.env.BRIDGE;
+const BRIDGES_DIR = path.join(__dirname, "bridges", BRIDGE);
 
-const INSTRUCTION_FILE = process.env.INSTRUCTION_FILE;
-const instructionsPath = path.join(__dirname, INSTRUCTION_FILE);
-let instructions;
+const instructions = loadInstructions(BRIDGES_DIR);
+const templates = loadTemplates(BRIDGES_DIR);
 
-try {
-  instructions = fs.readFileSync(instructionsPath, "utf8");
-} catch (error) {
-  console.error("Error reading instruction file:", error.message);
-}
+registerHelpers();
 
 export async function handler() {
   if (!instructions) {
@@ -30,7 +32,9 @@ export async function handler() {
   try {
     const content = await generateContent();
     if (content) {
-      await sendMessage(content);
+      const textMessage = templates.message(content);
+      await sendMessage(textMessage);
+
       return {
         statusCode: 200,
         body: JSON.stringify({ message: "Message sent successfully" }),
@@ -52,21 +56,31 @@ export async function handler() {
 
 async function generateContent() {
   try {
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const response = await client.chat.completions.create({
       model: process.env.OPENAI_API_MODEL,
-      messages: [{ role: "user", content: instructions }],
-      max_tokens: 1000,
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a language teaching assistant specializing in creating educational content for language learners.",
+        },
+        { role: "user", content: instructions },
+      ],
+      tools: [{ type: "function", function: languageFunction }],
+      tool_choice: {
+        type: "function",
+        function: { name: "languageContent" },
+      },
       temperature: 0.7,
     });
 
-    const content = response.choices[0].message.content;
-    console.debug(content);
+    const toolCall = response.choices[0].message.tool_calls[0];
+    const content = JSON.parse(toolCall.function.arguments);
+    console.debug("Generated content:", content);
     return content;
   } catch (error) {
-    console.error(
-      "Error generating content:",
-      error.response ? error.response.data : error.message,
-    );
+    console.error("Error generating content:", error);
     throw error;
   }
 }
@@ -98,7 +112,8 @@ if (process.env.NODE_ENV !== "lambda") {
     try {
       const content = await generateContent();
       if (content) {
-        await sendMessage(content);
+        const textMessage = templates.message(content);
+        await sendMessage(textMessage);
       } else {
         console.error("No content generated.");
       }

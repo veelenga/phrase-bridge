@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node --env-file=.env index.js",
     "clean": "rimraf dist build",
-    "build:prod": "yarn clean && mkdir -p dist && cp -r index.js instructions package.json yarn.lock dist/ && cd dist && yarn install --production --frozen-lockfile",
+    "build:prod": "yarn clean && mkdir -p dist && cp -r index.js lib bridges package.json yarn.lock dist/ && cd dist && yarn install --production --frozen-lockfile",
     "zip": "gulp zip",
     "deploy:package": "yarn build:prod && yarn zip"
   },
@@ -15,6 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^1.7.7",
+    "handlebars": "^4.7.8",
     "openai": "^4.68.4"
   },
   "devDependencies": {
