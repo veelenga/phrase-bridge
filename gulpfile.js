@@ -1,26 +1,17 @@
 import gulp from "gulp";
 import gulpZip from "gulp-zip";
 import { deleteSync } from "del";
-import { readFileSync } from "fs";
-
-const packageJson = JSON.parse(readFileSync("./package.json"));
-const { name, version } = packageJson;
+import path from "path";
+import fs from "fs";
 
 const config = {
   dist: "dist",
   build: "build",
-  packageName: `${name}-${version}.zip`,
-  src: {
-    js: "index.js",
-    instructions: "instructions/**/*",
-    packageJson: "package.json",
+  packageJson: JSON.parse(fs.readFileSync("./package.json")),
+  get packageName() {
+    return `${this.packageJson.name}-${this.packageJson.version}.zip`;
   },
 };
-
-function cleanDist(cb) {
-  deleteSync([`${config.dist}/**`, config.dist]);
-  cb();
-}
 
 function cleanBuild(cb) {
   deleteSync([`${config.build}/**`, config.build]);
@@ -30,12 +21,20 @@ function cleanBuild(cb) {
 function createZip() {
   console.log(`Creating archive: ${config.packageName}`);
   return gulp
-    .src(`${config.dist}/**/*`)
+    .src([
+      path.join(config.dist, "**", "*"),
+      path.join(config.dist, "**/.*"), // Include dot files
+      `!${path.join(config.dist, "node_modules/.bin/**")}`,
+      `!${path.join(config.dist, "**/*.test.js")}`,
+      `!${path.join(config.dist, "**/*.spec.js")}`,
+      `!${path.join(config.dist, "**/__tests__/**")}`,
+      `!${path.join(config.dist, "**/__mocks__/**")}`,
+      `!${path.join(config.dist, "**/examples/**")}`,
+    ])
     .pipe(gulpZip(config.packageName))
     .pipe(gulp.dest(config.build));
 }
 
-export const clean = gulp.parallel(cleanDist, cleanBuild);
 export const zip = gulp.series(cleanBuild, createZip);
 
 export default zip;
