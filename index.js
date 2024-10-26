@@ -70,7 +70,7 @@ async function generateContent() {
       tools: [{ type: "function", function: languageFunction }],
       tool_choice: {
         type: "function",
-        function: { name: "generateLanguageContent" },
+        function: { name: "languageContent" },
       },
       temperature: 0.7,
     });

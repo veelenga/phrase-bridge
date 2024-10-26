@@ -23,7 +23,6 @@ function createZip() {
   return gulp
     .src([
       path.join(config.dist, "**", "*"),
-      path.join(config.dist, "**/.*"), // Include dot files
       `!${path.join(config.dist, "node_modules/.bin/**")}`,
       `!${path.join(config.dist, "**/*.test.js")}`,
       `!${path.join(config.dist, "**/*.spec.js")}`,
