@@ -13,7 +13,7 @@ import {
   generateAudio,
   shouldGenerateAudio,
 } from "./lib/openai.js";
-import { sendAudio, sendMessage } from "./lib/telegram.js";
+import { sendAudio, sendAudioMessage, sendMessage } from "./lib/telegram.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,14 +61,15 @@ export async function handler() {
 async function sendContent(content) {
   try {
     const textMessage = templates.message(content);
-    await sendMessage(textMessage);
 
     if (shouldGenerateAudio()) {
       const audioPath = await generateAudio(templates.audio(content));
       if (audioPath) {
-        await sendAudio(audioPath);
+        await sendAudioMessage(textMessage, audioPath);
         fs.unlinkSync(audioPath);
       }
+    } else {
+      await sendMessage(textMessage);
     }
   } catch (error) {
     console.error("Error sending content:", error);
