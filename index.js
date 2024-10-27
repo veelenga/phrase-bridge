@@ -107,7 +107,7 @@ async function sendMessage(message) {
 }
 
 // If running locally, invoke the main function
-if (process.env.NODE_ENV !== "lambda") {
+if (!process.env.AWS_EXECUTION_ENV) {
   (async () => {
     try {
       const content = await generateContent();
