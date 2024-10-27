@@ -35,7 +35,7 @@ export async function handler() {
   }
 
   try {
-    const content = await generateContent(templates);
+    const content = await generateContent(instructions);
     if (content) {
       await sendContent(content);
 
