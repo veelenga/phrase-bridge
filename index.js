@@ -2,29 +2,30 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-import {
-  registerHelpers,
-  loadInstructions,
-  loadTemplates,
-} from "./lib/config.js";
+import { registerHelpers, loadTemplates } from "./lib/config.js";
 
 import {
   generateContent,
   generateAudio,
   shouldGenerateAudio,
 } from "./lib/openai.js";
-import { sendAudio, sendAudioMessage, sendMessage } from "./lib/telegram.js";
+import { sendAudioMessage, sendMessage } from "./lib/telegram.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const BRIDGE = process.env.BRIDGE;
+const [target_lng, source_lng] = BRIDGE.split("-");
 const BRIDGES_DIR = path.join(__dirname, "bridges", BRIDGE);
 
-const instructions = loadInstructions(BRIDGES_DIR);
-const templates = loadTemplates(BRIDGES_DIR);
-
 registerHelpers();
+
+const templates = loadTemplates(BRIDGES_DIR);
+const instructions = templates.instructions({
+  weekday: new Date().toLocaleString("en-US", { weekday: "long" }),
+  target_lng,
+  source_lng,
+});
 
 export async function handler() {
   if (!instructions) {
