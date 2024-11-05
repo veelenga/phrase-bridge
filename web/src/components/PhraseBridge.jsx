@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 
 const bridges = [
-  { id: "ua-pl", name: "UA-PL", source: "🇺🇦", target: "🇵🇱" },
-  { id: "ua-en", name: "UA-EN", source: "🇺🇦", target: "🇬🇧" },
-  { id: "pl-ua", name: "PL-UA", source: "🇵🇱", target: "🇺🇦" },
+  { id: "UA-PL", name: "UA-PL", source: "🇺🇦", target: "🇵🇱", disabled: false },
+  { id: "UA-EN", name: "UA-EN", source: "🇺🇦", target: "🇬🇧", disabled: true },
+  { id: "EN-ES", name: "EN-ES", source: "🇬🇧", target: "🇪🇸", disabled: true },
 ];
 
 function getInitialBridge() {
   const params = new URLSearchParams(window.location.search);
   const bridgeFromUrl = params.get("bridge");
-  return bridges.some((b) => b.id === bridgeFromUrl) ? bridgeFromUrl : "ua-pl";
+  return bridges.some((b) => b.id === bridgeFromUrl)
+    ? bridgeFromUrl
+    : bridges[0].id;
 }
 
 function PhraseBridge() {
   const [selectedBridge, setSelectedBridge] = useState(getInitialBridge());
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isDark, setIsDark] = useState(
     () => localStorage.getItem("theme") === "dark",
@@ -30,10 +32,10 @@ function PhraseBridge() {
       setLoading(true);
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_S3_BUCKET_URL}/${selectedBridge}/latest.html`,
+          `${import.meta.env.VITE_S3_BUCKET_URL}/${selectedBridge}/latest-message.json`,
         );
-        const html = await response.text();
-        setContent(html);
+        const data = await response.json();
+        setContent(data);
       } catch (error) {
         console.error("Error fetching content:", error);
       }
@@ -43,13 +45,11 @@ function PhraseBridge() {
     fetchContent();
   }, [selectedBridge]);
 
-  // Handle theme changes
   useEffect(() => {
     document.body.classList.toggle("dark", isDark);
     localStorage.setItem("theme", isDark ? "dark" : "light");
   }, [isDark]);
 
-  // Handle browser back/forward
   useEffect(() => {
     const handlePopState = () => {
       const newBridge = getInitialBridge();
@@ -77,12 +77,15 @@ function PhraseBridge() {
               onChange={(e) => setSelectedBridge(e.target.value)}
             >
               {bridges.map((bridge) => (
-                <option key={bridge.id} value={bridge.id}>
+                <option
+                  key={bridge.id}
+                  value={bridge.id}
+                  disabled={bridge.disabled}
+                >
                   {bridge.source} {bridge.target} {bridge.name}
                 </option>
               ))}
             </select>
-
             <a
               href={`https://t.me/your_channel_${selectedBridge}`}
               target="_blank"
@@ -91,7 +94,6 @@ function PhraseBridge() {
             >
               <i className="fab fa-telegram-plane"></i>
             </a>
-
             <button
               className="theme-toggle"
               onClick={() => setIsDark(!isDark)}
@@ -102,6 +104,12 @@ function PhraseBridge() {
           </div>
         </header>
 
+        {content?.audio && (
+          <audio controls className="audio-player" preload="metadata">
+            <source src={content.audio} type="audio/mpeg" />
+          </audio>
+        )}
+
         <div className="content-card">
           {loading ? (
             <div className="loading">
@@ -109,8 +117,38 @@ function PhraseBridge() {
               <div className="loading-line"></div>
               <div className="loading-line"></div>
             </div>
+          ) : content ? (
+            <div className="content">
+              {content.sections.map((section, index) => (
+                <div key={index} className="section">
+                  <div className="section-header">
+                    <span>{section.icon}</span>
+                    <span>{section.title}</span>
+                  </div>
+                  {section.content && (
+                    <p className="section-content">{section.content}</p>
+                  )}
+                  {section.items && (
+                    <ul className={`${section.type}-list`}>
+                      {section.items.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {section.examples && (
+                    <ul className="examples-list">
+                      {section.examples.map((example, i) => (
+                        <li key={i}>
+                          {example.source} — {example.translation}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
           ) : (
-            <div dangerouslySetInnerHTML={{ __html: content }} />
+            <div>No content available</div>
           )}
         </div>
       </div>
