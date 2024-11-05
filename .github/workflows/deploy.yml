@@ -1,13 +1,18 @@
-name: Deploy to GitHub Pages
-
+name: Deploy Web to GitHub Pages
 on:
   push:
     branches:
       - main
+    paths:
+      - 'web/**'  # Only trigger when web directory changes
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web  # Set the working directory to web folder
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -15,17 +20,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'
+          node-version: '20'  # Using more stable version
           cache: 'npm'
+          cache-dependency-path: './web/package-lock.json'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
+        env:
+          VITE_S3_BUCKET_URL: ${{ secrets.VITE_S3_BUCKET_URL }}
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist
+          folder: web/dist  # Path to your build output
           branch: gh-pages
