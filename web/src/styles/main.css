@@ -1,0 +1,322 @@
+/* src/styles/main.css */
+
+/**
+ * CSS Custom Properties (Variables)
+ */
+:root {
+  /* Core colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Light theme colors */
+  --color-bg-primary-light: #ffffff;
+  --color-bg-secondary-light: #f8fafc;
+  --color-text-primary-light: #1e293b;
+  --color-text-secondary-light: #475569;
+  --color-border-light: #e2e8f0;
+  --color-accent-light: #3b82f6;
+
+  /* Telegram dark theme colors */
+  --color-bg-primary-dark: #0f0f0f;
+  --color-bg-secondary-dark: #212121;
+  --color-bg-tertiary-dark: #303030;
+  --color-text-primary-dark: #ffffff;
+  --color-text-secondary-dark: #aaaaaa;
+  --color-border-dark: #303030;
+  --color-accent-dark: #64B5F6;
+
+  /* Telegram brand colors */
+  --color-telegram-primary: #2AABEE;
+  --color-telegram-secondary: #229ED9;
+
+  /* Sizing and spacing */
+  --spacing-xs: 0.5rem;    /* 8px */
+  --spacing-sm: 0.75rem;   /* 12px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Font sizes */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-md: 1rem;      /* 16px */
+  --font-size-lg: 1.25rem;   /* 20px */
+  --font-size-xl: 1.875rem;  /* 30px */
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/**
+ * Base styles
+ */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--color-bg-primary-light);
+  padding-top: 4vh;
+  display: flex;
+  justify-content: center;
+  transition: background var(--transition-normal);
+}
+
+body.dark {
+  background: var(--color-bg-primary-dark);
+}
+
+/**
+ * Layout
+ */
+.wrapper-card {
+  background: var(--color-bg-primary-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  max-width: 800px;
+  margin: var(--spacing-md);
+  border: 1px solid var(--color-border-light);
+  transition: all var(--transition-normal);
+}
+
+body.dark .wrapper-card {
+  background: var(--color-bg-secondary-dark);
+  border-color: var(--color-border-dark);
+  box-shadow: none;
+}
+
+.container {
+  padding: var(--spacing-xl);
+}
+
+/**
+ * Header
+ */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.title-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text-primary-light);
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary-light);
+  margin: 0;
+  font-weight: 400;
+}
+
+body.dark .title {
+  color: var(--color-text-primary-dark);
+}
+
+body.dark .subtitle {
+  color: var(--color-text-secondary-dark);
+}
+
+/**
+ * Navigation controls
+ */
+.nav-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.select-bridge {
+  padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-light);
+  background-color: var(--color-bg-secondary-light);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary-light);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  transition: all var(--transition-fast);
+}
+
+.select-bridge:hover {
+  border-color: var(--color-accent-light);
+}
+
+body.dark .select-bridge {
+  background-color: var(--color-bg-tertiary-dark);
+  border-color: var(--color-border-dark);
+  color: var(--color-text-primary-dark);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23aaaaaa'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body.dark .select-bridge:hover {
+  border-color: var(--color-accent-dark);
+}
+
+/**
+ * Telegram link
+ */
+.telegram-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-telegram-primary);
+  border-radius: var(--radius-lg);
+  color: var(--color-white);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  font-size: var(--font-size-lg);
+}
+
+.telegram-link:hover {
+  background-color: var(--color-telegram-secondary);
+  transform: translateY(-1px);
+}
+
+/**
+ * Theme toggle
+ */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  color: var(--color-text-primary-light);
+  background-color: var(--color-bg-secondary-light);
+  font-size: var(--font-size-lg);
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  border-color: var(--color-accent-light);
+}
+
+body.dark .theme-toggle {
+  color: var(--color-text-primary-dark);
+  background-color: var(--color-bg-tertiary-dark);
+  border-color: var(--color-border-dark);
+}
+
+body.dark .theme-toggle:hover {
+  border-color: var(--color-accent-dark);
+}
+
+/**
+ * Content area
+ */
+.content-card {
+  background-color: var(--color-bg-secondary-light);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--color-border-light);
+}
+
+body.dark .content-card {
+  background-color: var(--color-bg-tertiary-dark);
+  border-color: var(--color-border-dark);
+  color: var(--color-text-primary-dark);
+}
+
+/**
+ * Loading animation
+ */
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.2; }
+}
+
+.loading {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-direction: column;
+  padding: var(--spacing-lg);
+}
+
+.loading-line {
+  height: 1.5rem;
+  background-color: var(--color-border-light);
+  border-radius: var(--radius-md);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+body.dark .loading-line {
+  background-color: var(--color-border-dark);
+}
+
+.loading-line:nth-child(1) { width: 60%; }
+.loading-line:nth-child(2) { width: 80%; }
+.loading-line:nth-child(3) { width: 70%; }
+
+/**
+ * Audio player
+ */
+audio {
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+}
+
+body.dark audio {
+  background-color: var(--color-bg-tertiary-dark);
+}
+
+/**
+ * Responsive adjustments
+ */
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .title-section {
+    align-items: center;
+  }
+
+  .nav-controls {
+    justify-content: center;
+  }
+
+  .select-bridge {
+    flex: 1;
+  }
+}
