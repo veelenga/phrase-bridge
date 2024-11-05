@@ -97,6 +97,10 @@ body.dark {
   margin: 0 1rem;
   border: 1px solid var(--color-border-light);
   transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh;
+
 }
 
 body.dark .wrapper-card {
@@ -107,6 +111,9 @@ body.dark .wrapper-card {
 
 .container {
   padding: var(--spacing-xl);
+  width: 100%;
+  overflow-x: hidden;
+  flex: 1;
 }
 
 /* Header */
@@ -385,6 +392,70 @@ body.dark .loading-line {
   50% { opacity: 0.2; }
 }
 
+.footer {
+  margin-top: auto;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.footer-links {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-text-secondary-light);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--color-accent-light);
+}
+
+.footer-copyright {
+  color: var(--color-text-secondary-light);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.author-link {
+  color: var(--color-text-secondary-light);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.author-link:hover {
+  color: var(--color-accent-light);
+}
+
+/* Dark mode styles */
+body.dark .footer {
+  border-top-color: var(--color-border-dark);
+}
+
+body.dark .footer-link,
+body.dark .footer-copyright,
+body.dark .author-link {
+  color: var(--color-text-secondary-dark);
+}
+
+body.dark .footer-link:hover,
+body.dark .author-link:hover {
+  color: var(--color-accent-dark);
+}
+
 /* Responsive design */
 @media (max-width: 640px) {
   body {
@@ -428,5 +499,23 @@ body.dark .loading-line {
 
   .section-content {
     font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: var(--spacing-md);
+  }
+
+  .footer-content {
+    gap: var(--spacing-sm);
+  }
+
+  .footer-links {
+    gap: var(--spacing-md);
+  }
+
+  .footer-copyright {
+    font-size: var(--font-size-xs);
   }
 }

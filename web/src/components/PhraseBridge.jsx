@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Footer from "./Footer";
 
 const bridges = [
   { id: "UA-PL", name: "UA-PL", source: "🇺🇦", target: "🇵🇱", disabled: false },
@@ -152,6 +153,8 @@ function PhraseBridge() {
           )}
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
