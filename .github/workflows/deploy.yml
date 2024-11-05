@@ -4,14 +4,14 @@ on:
     branches:
       - main
     paths:
-      - 'web/**'  # Only trigger when web directory changes
+      - 'web/**'
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./web  # Set the working directory to web folder
+        working-directory: ./web
 
     steps:
       - name: Checkout
@@ -20,20 +20,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Using more stable version
-          cache: 'npm'
-          cache-dependency-path: './web/package-lock.json'
+          node-version: 20
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install
 
       - name: Build
-        run: npm run build
+        run: yarn build
         env:
           VITE_S3_BUCKET_URL: ${{ secrets.VITE_S3_BUCKET_URL }}
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: web/dist  # Path to your build output
+          folder: web/dist
           branch: gh-pages
