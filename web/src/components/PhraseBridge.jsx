@@ -88,7 +88,7 @@ function PhraseBridge() {
               ))}
             </select>
             <a
-              href={`https://t.me/your_channel_${selectedBridge}`}
+              href={`${import.meta.env.VITE_TELEGRAM_CHANNEL_BASE}${selectedBridge.replace('-', '_')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="telegram-link"

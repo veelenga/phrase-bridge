@@ -4,7 +4,7 @@
   --color-black: #000000;
 
   /* Light theme colors */
-  --color-bg-primary-light: #ffffff;
+  --color-bg-primary-light: #fbfbfb;
   --color-bg-secondary-light: #f8fafc;
   --color-text-primary-light: #1e293b;
   --color-text-secondary-light: #475569;
@@ -73,6 +73,7 @@ body {
   min-height: 100vh;
   background: var(--color-bg-primary-light);
   padding-top: 4vh;
+  padding-bottom: 4vh;
   display: flex;
   justify-content: center;
   transition: background var(--transition-normal);
@@ -89,7 +90,7 @@ body.dark {
 
 /* Layout */
 .wrapper-card {
-  background: var(--color-bg-primary-light);
+  background: var(--color-bg-secondary-light);
   border-radius: var(--radius-lg);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 800px;
@@ -100,7 +101,6 @@ body.dark {
   display: flex;
   flex-direction: column;
   min-height: 90vh;
-
 }
 
 body.dark .wrapper-card {
@@ -268,7 +268,7 @@ body.dark .content-card {
 .audio-player {
   width: 100%;
   margin-bottom: var(--spacing-sm);
-  border-radius: var(--radius-lg);
+  border-radius: 50px
 }
 
 body.dark audio {
@@ -460,6 +460,7 @@ body.dark .author-link:hover {
 @media (max-width: 640px) {
   body {
     padding-top: 0;
+    padding-bottom: 0;
   }
 
   .container {
