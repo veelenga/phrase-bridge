@@ -4,7 +4,7 @@ An app that helps you learn languages by creating daily phrases using OpenAI. It
 - A Lambda function that generates and posts language learning content to Telegram channels and S3
 - A web interface that displays the latest phrases with audio support
 
-![Telegram Message Example](screenshots/telegram.ua-pl.jpeg)
+![](screenshots/telegram.ua-pl.png)
 
 ## Features
 
