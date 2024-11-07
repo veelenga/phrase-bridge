@@ -96,10 +96,20 @@ export async function generateAudio(input) {
     });
 
     const buffer = Buffer.from(await response.arrayBuffer());
-    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    const audioPath = `/tmp/speech-${timestamp}.mp3`;
+    const date = new Date().toISOString().split("T")[0];
+    const audioPath = `/tmp/speech-${date}.mp3`;
+
+    const NodeID3 = await import("node-id3").then((m) => m.default);
+    const tags = {
+      title: `speech-${date}`,
+      artist: `Phrase Bridge ${process.env.BRIDGE}`,
+      album: `Daily Phrases ${process.env.BRIDGE}`,
+      date: date,
+    };
 
     fs.writeFileSync(audioPath, buffer);
+    NodeID3.write(tags, audioPath);
+
     return audioPath;
   } catch (error) {
     console.error("Error generating audio:", error);
