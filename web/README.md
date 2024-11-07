@@ -1,8 +1,17 @@
-# React + Vite
+# Phrase Bridge Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple web interface for the generated content.
 
-Currently, two official plugins are available:
+## Usage
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Environment Variables
+
+Create your `.env` using `.env.example` file.
+
+### Local Development
+
+Install deps and run the app locally:
+```bash
+yarn install
+yarn dev
+```
