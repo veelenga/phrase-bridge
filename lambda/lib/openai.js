@@ -10,12 +10,6 @@ const languageFunction = {
       phrase: { type: "string" },
       transcription: { type: "string" },
       translation: { type: "string" },
-      situations: {
-        type: "array",
-        items: { type: "string" },
-        minItems: 1,
-        maxItems: 2,
-      },
       pronunciation: {
         type: "array",
         items: {
@@ -47,7 +41,6 @@ const languageFunction = {
       "phrase",
       "transcription",
       "translation",
-      "situations",
       "pronunciation",
       "examples",
     ],

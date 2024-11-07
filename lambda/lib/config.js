@@ -3,11 +3,6 @@ import fs from "fs";
 import Handlebars from "handlebars";
 
 export const registerHelpers = () => {
-  Handlebars.registerHelper("bulletList", function (items) {
-    if (!Array.isArray(items)) return "";
-    return items.map((item) => `• ${item}`).join("\n");
-  });
-
   Handlebars.registerHelper("pronunciationList", function (items) {
     if (!Array.isArray(items)) return "";
     return items.map((d) => `• "${d.word}" — ${d.explanation}`).join("\n");

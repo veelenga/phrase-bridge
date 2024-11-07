@@ -1,6 +1,7 @@
 # Phrase Bridge Bot
 
-A bot that posts phrases with audio to Telegram channels using OpenAI API. The bot reads predefined instructions and generates content using OpenAI's GPT models, then posts the generated content to specified Telegram channels.
+A bot that posts phrases with audio to Telegram channels using OpenAI API.
+It reads predefined instructions and generates content using OpenAI's GPT models, then posts the generated content to specified Telegram channels.
 
 ## Usage
 
