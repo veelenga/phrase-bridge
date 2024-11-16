@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import fs from "fs";
 
-const languageFunction = {
+const phraseFunction = {
   name: "languageContent",
   description: "Generate structured language learning content",
   parameters: {
@@ -47,6 +47,41 @@ const languageFunction = {
   },
 };
 
+const pollFunction = {
+  name: "pollContent",
+  description: "Generate language learning poll content",
+  parameters: {
+    type: "object",
+    properties: {
+      question: {
+        type: "object",
+        properties: {
+          phrase: { type: "string" },
+          language: {
+            type: "string",
+            enum: ["source", "target"],
+          },
+        },
+        required: ["phrase", "language"],
+      },
+      options: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            text: { type: "string" },
+            isCorrect: { type: "boolean" },
+          },
+          required: ["text", "isCorrect"],
+        },
+        minItems: 3,
+        maxItems: 4,
+      },
+    },
+    required: ["question", "options"],
+  },
+};
+
 function client() {
   return new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 }
@@ -67,7 +102,7 @@ export async function generateContent(instructions) {
         },
         { role: "user", content: instructions },
       ],
-      tools: [{ type: "function", function: languageFunction }],
+      tools: [{ type: "function", function: phraseFunction }],
       tool_choice: {
         type: "function",
         function: { name: "languageContent" },
@@ -114,6 +149,44 @@ export async function generateAudio(input) {
   } catch (error) {
     console.error("Error generating audio:", error);
     return null;
+  }
+}
+
+export async function generatePoll(instructions) {
+  try {
+    const response = await client().chat.completions.create({
+      model: process.env.OPENAI_API_TEXT_MODEL,
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a language teaching assistant specializing in creating challenging but fair language learning polls.",
+        },
+        { role: "user", content: instructions },
+      ],
+      tools: [{ type: "function", function: pollFunction }],
+      tool_choice: {
+        type: "function",
+        function: { name: "pollContent" },
+      },
+      temperature: 0.7,
+    });
+
+    const toolCall = response.choices[0].message.tool_calls[0];
+    const content = JSON.parse(toolCall.function.arguments);
+    console.debug("Generated content:", content);
+
+    const correctIndex = content.options.findIndex((opt) => opt.isCorrect);
+    const options = content.options.map((opt) => opt.text);
+
+    return {
+      question: content.question.phrase,
+      options,
+      correctIndex,
+    };
+  } catch (error) {
+    console.error("Error generating poll content:", error);
+    throw error;
   }
 }
 

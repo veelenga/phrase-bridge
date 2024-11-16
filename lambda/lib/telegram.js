@@ -69,3 +69,21 @@ export async function sendAudioMessage(message, audioPath) {
     throw error;
   }
 }
+
+export async function sendPoll(question, options, correctIndex) {
+  try {
+    await axios.post(`${telegramConfig.getBaseUrl()}/sendPoll`, {
+      chat_id: telegramConfig.chatId,
+      question: question,
+      options: JSON.stringify(options),
+      type: "quiz",
+      correct_option_id: correctIndex,
+      is_anonymous: true,
+      explanation_parse_mode: "HTML",
+    });
+    console.log("Poll sent successfully");
+  } catch (error) {
+    console.error("Error sending poll:", error);
+    throw error;
+  }
+}

@@ -31,9 +31,15 @@ export const loadTemplates = (dir) => {
   );
   const audioTemplate = fs.readFileSync(path.join(dir, "audio.hbs"), "utf8");
 
+  const pollInstructions = fs.readFileSync(
+    path.join(dir, "pollInstructions.hbs"),
+    "utf8",
+  );
+
   return {
     instructions: Handlebars.compile(instructions.trim()),
     message: Handlebars.compile(messageTemplate.trim()),
     audio: Handlebars.compile(audioTemplate.trim()),
+    pollInstructions: Handlebars.compile(pollInstructions.trim()),
   };
 };
