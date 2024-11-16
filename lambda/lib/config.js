@@ -20,26 +20,30 @@ export const registerHelpers = () => {
   });
 };
 
-export const loadTemplates = (dir) => {
-  const instructions = fs.readFileSync(
-    path.join(dir, "instructions.hbs"),
+export const loadHBS = (dir) => {
+  const messageInstructions = fs.readFileSync(
+    path.join("instructions", "message.hbs"),
     "utf8",
   );
+  const pollInstructions = fs.readFileSync(
+    path.join("instructions", "poll.hbs"),
+    "utf8",
+  );
+
   const messageTemplate = fs.readFileSync(
     path.join(dir, "message.hbs"),
     "utf8",
   );
   const audioTemplate = fs.readFileSync(path.join(dir, "audio.hbs"), "utf8");
 
-  const pollInstructions = fs.readFileSync(
-    path.join(dir, "pollInstructions.hbs"),
-    "utf8",
-  );
-
   return {
-    instructions: Handlebars.compile(instructions.trim()),
-    message: Handlebars.compile(messageTemplate.trim()),
-    audio: Handlebars.compile(audioTemplate.trim()),
-    pollInstructions: Handlebars.compile(pollInstructions.trim()),
+    instructions: {
+      message: Handlebars.compile(messageInstructions.trim()),
+      poll: Handlebars.compile(pollInstructions.trim()),
+    },
+    templates: {
+      message: Handlebars.compile(messageTemplate.trim()),
+      audio: Handlebars.compile(audioTemplate.trim()),
+    },
   };
 };

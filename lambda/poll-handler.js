@@ -1,6 +1,6 @@
 import { fileURLToPath } from "url";
 import path from "path";
-import { registerHelpers, loadTemplates } from "./lib/config.js";
+import { registerHelpers, loadHBS } from "./lib/config.js";
 import { generatePoll } from "./lib/openai.js";
 import { sendPoll } from "./lib/telegram.js";
 
@@ -13,15 +13,15 @@ const BRIDGES_DIR = path.join(__dirname, "bridges", BRIDGE);
 
 registerHelpers();
 
-const templates = loadTemplates(BRIDGES_DIR);
-const instructions = templates.pollInstructions({
+const { instructions } = loadHBS(BRIDGES_DIR);
+const pollInstructions = instructions.poll({
   weekday: new Date().toLocaleString("en-US", { weekday: "long" }),
   target_lng,
   source_lng,
 });
 
 export async function handler() {
-  if (!instructions) {
+  if (!pollInstructions) {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Poll instruction file not found" }),
@@ -29,7 +29,7 @@ export async function handler() {
   }
 
   try {
-    const pollContent = await generatePoll(instructions);
+    const pollContent = await generatePoll(pollInstructions);
 
     if (pollContent) {
       const { question, options, correctIndex } = pollContent;
