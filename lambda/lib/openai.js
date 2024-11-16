@@ -56,7 +56,11 @@ const pollFunction = {
       question: {
         type: "object",
         properties: {
-          phrase: { type: "string" },
+          phrase: {
+            type: "string",
+            minLength: 30,
+            maxLength: 80,
+          },
           language: {
             type: "string",
             enum: ["source", "target"],
@@ -176,12 +180,14 @@ export async function generatePoll(instructions) {
     const content = JSON.parse(toolCall.function.arguments);
     console.debug("Generated content:", content);
 
-    const correctIndex = content.options.findIndex((opt) => opt.isCorrect);
     const options = content.options.map((opt) => opt.text);
+    const correctAnswer = content.options.find((opt) => opt.isCorrect).text;
+    const shuffledOptions = [...options].sort(() => Math.random() - 0.5);
+    const correctIndex = shuffledOptions.indexOf(correctAnswer);
 
     return {
       question: content.question.phrase,
-      options,
+      options: shuffledOptions,
       correctIndex,
     };
   } catch (error) {

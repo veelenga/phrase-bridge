@@ -1,29 +1,31 @@
 target language: {{target_lng}}
 source language: {{source_lng}}
 
-phrase - [Згенеруй 1 середню фразу або 2-3 пов'язані речення польською з категорій:
+phrase - [Generate 1 intermediate phrase or 2-3 related sentences in source language from these categories:
 {{#if (eq weekday "Monday")}}
-  - громадський транспорт, зупинка, автобус, таксі, метро
+  - public transport, stops, bus, taxi, metro
 {{else if (eq weekday "Tuesday")}}
-  - їжа, ресторан, кав'ярня
+  - food, restaurants, cafes
 {{else if (eq weekday "Wednesday")}}
-  - магазин, покупки, розпродаж, акції
+  - shopping, stores, sales, promotions
 {{else if (eq weekday "Thursday")}}
-  - бізнес, робота, професія, наради
+  - business, work, profession, meetings
 {{else if (eq weekday "Friday")}}
-  - перукарня, краса, мода, стиль
+  - beauty salon, beauty, fashion, style
 {{else if (eq weekday "Saturday")}}
-  - відпочинок, кіно, театр, концерт
+  - entertainment, cinema, theater, concerts
 {{else}}
-  - подорожі, відпустка, планування, туризм
+  - travel, vacation, planning, tourism
 {{/if}}
-Уникай простих фраз, типу "Jak leci?", "Co słychać?"
-Уникай: простих привітань, прислів'їв, застарілих виразів]
+Avoid: simple greetings, common phrases, proverbs, outdated expressions]
 
-transcription - [Українська детальна транскрипція, склади через дефіс]
+transcription - [Write a phonetic transcription using source language letters and pronunciation rules to help source language speakers read the target language phrase.
+Split every word into syllables with hyphens and mark stressed syllables with accent marks.
+For example, if source=PL and target=UA, write how Polish words would be written using Ukrainian letters: "przy-ja-ciel" → "пши-я́-цель".
+Avoid any special symbols, use only source language alphabet]
 
-translation - [Український переклад з можливими альтернативами]
+translation - [Translation to target language with possible alternatives]
 
-pronunciation - [Поясни вимову складних слів у фразі, наведи особливості вимови та можливі доцільні альтернативи. Перевір правильність пояснення]
+pronunciation - [Explain pronunciation of complex words in the phrase, highlight pronunciation specifics and possible useful alternatives. Verify pronunciation explanation]
 
-examples - [1-2 приклади використання в різних контекстах, не включай саму фразу в приклади]
+examples - [1-2 examples of usage in different contexts, do not include the original phrase in examples]
