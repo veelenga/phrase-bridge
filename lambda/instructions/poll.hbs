@@ -1,23 +1,23 @@
 target language: {{target_lng}}
 source language: {{source_lng}}
 
-[Generate a language quiz question based on these criteria:
+Generate a language quiz question based on these criteria:
 
 1. Generate an intermediate phrase from these categories:
 {{#if (eq weekday "Monday")}}
-  - public transport, stops, bus, taxi, metro
-{{else if (eq weekday "Tuesday")}}
-  - food, restaurants, cafes
-{{else if (eq weekday "Wednesday")}}
-  - shopping, stores, sales, promotions
-{{else if (eq weekday "Thursday")}}
-  - business, work, profession, meetings
-{{else if (eq weekday "Friday")}}
-  - beauty salon, beauty, fashion, style
-{{else if (eq weekday "Saturday")}}
-  - entertainment, cinema, theater, concerts
-{{else}}
   - travel, vacation, planning, tourism
+{{else if (eq weekday "Tuesday")}}
+  - public transport, stops, bus, taxi, metro
+{{else if (eq weekday "Wednesday")}}
+  - food, restaurants, cafes
+{{else if (eq weekday "Thursday")}}
+  - shopping, stores, sales, promotions
+{{else if (eq weekday "Friday")}}
+  - business, work, profession, meetings
+{{else if (eq weekday "Saturday")}}
+  - beauty salon, beauty, fashion, style
+{{else}}
+  - entertainment, cinema, theater, concerts
 {{/if}}
 
 2. Question format:
@@ -37,4 +37,4 @@ source language: {{source_lng}}
    - 2-3 incorrect but plausible translations
    - All answers in the target translation language
    - Incorrect options should be contextually related but clearly wrong to native speakers
-   - No obviously wrong or nonsensical options]
+   - No obviously wrong or nonsensical options
