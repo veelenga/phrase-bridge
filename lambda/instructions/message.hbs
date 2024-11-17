@@ -1,0 +1,32 @@
+target language: {{target_lng}}
+source language: {{source_lng}}
+
+phrase - [Generate 1 intermediate phrase or 2-3 related sentences in source language from these categories:
+{{#if (eq weekday "Monday")}}
+  - public transport, stops, bus, taxi, metro
+{{else if (eq weekday "Tuesday")}}
+  - food, restaurants, cafes
+{{else if (eq weekday "Wednesday")}}
+  - shopping, stores, sales, promotions
+{{else if (eq weekday "Thursday")}}
+  - business, work, profession, meetings
+{{else if (eq weekday "Friday")}}
+  - beauty salon, beauty, fashion, style
+{{else if (eq weekday "Saturday")}}
+  - entertainment, cinema, theater, concerts
+{{else}}
+  - travel, vacation, planning, tourism
+{{/if}}
+Avoid: simple greetings, common phrases, proverbs, outdated expressions]
+
+transcription - [Write a phonetic transcription using source language letters and pronunciation rules to help source language speakers read the target language phrase.
+Split every word into syllables with hyphens and mark stressed syllables with accent marks.
+For example, if source=PL and target=UA, write how Polish words would be written using Ukrainian letters: "przy-ja-ciel" → "пши-я́-цель".
+Avoid any special symbols, use only source language alphabet]
+
+translation - [Translation to target language with possible alternatives]
+
+pronunciation - [Explain pronunciation of complex words in the phrase, highlight pronunciation specifics and possible useful alternatives.
+Ensure explaination is in target language]
+
+examples - [1-2 examples of usage in different contexts, do not include the original phrase in examples]

@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-import { registerHelpers, loadTemplates } from "./lib/config.js";
+import { registerHelpers, loadHBS } from "./lib/config.js";
 
 import {
   generateContent,
@@ -20,23 +20,23 @@ const BRIDGES_DIR = path.join(__dirname, "bridges", BRIDGE);
 
 registerHelpers();
 
-const templates = loadTemplates(BRIDGES_DIR);
-const instructions = templates.instructions({
+const { templates, instructions } = loadHBS(BRIDGES_DIR);
+const messageInstructions = instructions.message({
   weekday: new Date().toLocaleString("en-US", { weekday: "long" }),
   target_lng,
   source_lng,
 });
 
 export async function handler() {
-  if (!instructions) {
+  if (!messageInstructions) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Instruction file not found" }),
+      body: JSON.stringify({ error: "Message instruction file not found" }),
     };
   }
 
   try {
-    const content = await generateContent(instructions);
+    const content = await generateContent(messageInstructions);
     if (content) {
       await sendContent(content);
 
@@ -82,7 +82,7 @@ async function sendContent(content) {
 if (!process.env.AWS_EXECUTION_ENV) {
   (async () => {
     try {
-      const content = await generateContent(instructions);
+      const content = await generateContent(messageInstructions);
       if (content) {
         await sendContent(content);
       } else {

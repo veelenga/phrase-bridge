@@ -47,8 +47,9 @@ Currently supported language pairs:
 
 - [x] Daily messages on Telegram
 - [x] Audio support
-- [ ] Telegram poll
+- [x] Telegram poll
 - [x] Web interface
+- [ ] S3 auto upload
 - [ ] Bridges:
   - [x] UA-PL
   - [ ] UA-EN

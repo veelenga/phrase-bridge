@@ -1,15 +1,17 @@
 {
   "name": "phrase-bridge-bot",
-  "version": "1.3.0",
-  "description": "A bot that posts phrases to Telegram channels using OpenAI API.",
+  "version": "1.4.0",
+  "description": "A bot that posts phrases and language quizzes to Telegram channels using OpenAI API.",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node --env-file=.env index.js",
+    "start:poll": "node --env-file=.env poll-handler.js",
     "clean": "rimraf dist build",
-    "build:prod": "yarn clean && mkdir -p dist && cp -r index.js lib bridges package.json yarn.lock dist/ && cd dist && yarn install --production --frozen-lockfile",
+    "build:prod": "yarn clean && mkdir -p dist && cp -r index.js poll-handler.js lib bridges package.json yarn.lock dist/ && cd dist && yarn install --production --frozen-lockfile",
     "zip": "gulp zip",
-    "deploy:package": "yarn build:prod && yarn zip"
+    "deploy:package": "yarn build:prod && yarn zip",
+    "format": "prettier --write \"**/*.{js,json,hbs}\""
   },
   "author": "Vitalii Elenhaupt",
   "license": "MIT",

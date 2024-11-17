@@ -1,0 +1,40 @@
+target language: {{target_lng}}
+source language: {{source_lng}}
+
+Generate a language quiz question based on these criteria:
+
+1. Generate an intermediate phrase from these categories:
+{{#if (eq weekday "Monday")}}
+  - travel, vacation, planning, tourism
+{{else if (eq weekday "Tuesday")}}
+  - public transport, stops, bus, taxi, metro
+{{else if (eq weekday "Wednesday")}}
+  - food, restaurants, cafes
+{{else if (eq weekday "Thursday")}}
+  - shopping, stores, sales, promotions
+{{else if (eq weekday "Friday")}}
+  - business, work, profession, meetings
+{{else if (eq weekday "Saturday")}}
+  - beauty salon, beauty, fashion, style
+{{else}}
+  - entertainment, cinema, theater, concerts
+{{/if}}
+
+2. Question format:
+   - Randomly choose translation direction (from target to source or vice versa)
+   - The phrase should be in the source language of chosen direction
+   - Answer options should be in the target language of chosen direction
+   - Use appropriate grammar and structure for both languages
+   - Add context when helpful
+
+3. Difficulty level:
+   - Intermediate level
+   - Focus on practical everyday usage
+   - Avoid very basic phrases
+
+4. Answer options:
+   - One correct translation
+   - 2-3 incorrect but plausible translations
+   - All answers in the target translation language
+   - Incorrect options should be contextually related but clearly wrong to native speakers
+   - No obviously wrong or nonsensical options
