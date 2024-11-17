@@ -1,6 +1,6 @@
 {
   "name": "phrase-bridge-bot",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A bot that posts phrases and language quizzes to Telegram channels using OpenAI API.",
   "main": "index.js",
   "type": "module",
