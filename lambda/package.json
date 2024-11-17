@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node --env-file=.env index.js",
-    "start:poll": "node --env-file=.env poll-handler.js",
+    "start:phrase": "node --env-file=.env index.js '{\"handler\":\"phrase\"}'",
+    "start:poll": "node --env-file=.env index.js '{\"handler\":\"poll\"}'",
     "clean": "rimraf dist build",
-    "build:prod": "yarn clean && mkdir -p dist && cp -r index.js poll-handler.js lib bridges package.json yarn.lock dist/ && cd dist && yarn install --production --frozen-lockfile",
+    "build:prod": "yarn clean && mkdir -p dist && cp -r index.js handlers lib bridges instructions package.json yarn.lock dist/ && cd dist && yarn install --production --frozen-lockfile",
     "zip": "gulp zip",
     "deploy:package": "yarn build:prod && yarn zip",
     "format": "prettier --write \"**/*.{js,json,hbs}\""
